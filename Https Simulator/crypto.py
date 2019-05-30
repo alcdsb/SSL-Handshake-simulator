@@ -33,7 +33,7 @@ class Asymmetric(object):
         return text
 
 BS = AES.block_size
-pad = lambda s: s + (BS - len(s) % BS) * chr(0) 
+pad = lambda x: x + (BS - len(x) % BS) * chr(0)
 
 class Symmetric(object):
 
@@ -42,12 +42,14 @@ class Symmetric(object):
         self.mode = mode
 
     def encrypt(self, plaintext):
+
         iv = Random.new().read(AES.block_size)
         cryptor = AES.new(self.key, self.mode, iv)
         ciphertext = cryptor.encrypt(pad(plaintext))
         return base64.encodestring(iv + ciphertext)
 
     def decrypt(self, ciphertext):
+
         ciphertext = base64.decodestring(ciphertext)
         iv = ciphertext[0:AES.block_size]
         ciphertext = ciphertext[AES.block_size:len(ciphertext)]
