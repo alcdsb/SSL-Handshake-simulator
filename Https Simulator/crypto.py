@@ -4,31 +4,31 @@ from Crypto import Random
 
 class Asymmetric(object):
 
-    def __init__(self, key, text):
+    def __init__(self, key):
 
         self.key = key
-        self.text = text
     
-    def encrypt(self):
+    def encrypt(self,text):
 
-        self.text = base64.encode(self.text)
-        self.text = self.text.encode('ascii')
-        self.text = list(self.text)
+        text = text.encode('ascii')
+        text = base64.b64encode(text)
+        text = list(text)
         en = []
-        for e in self.text:
+        for e in text:
             en.append(pow(e,self.key[1],self.key[0]))
 
-        return en
+        return en#base64.b64encode(bytes(en))
 
-    def decrypt(self):
+    def decrypt(self,text):
 
+        #text = base64.b64decode(text)
         de = []
-        self.text = list(self.text)
-        for c in self.text:
+        text = list(text)
+        for c in text:
             de.append(pow(c, self.key[1],self.key[0]))
-        
+
         text = bytes(de).decode('ascii')
-        text = base64.decode(text)
+        text = base64.b64decode(text)
     
         return text
 
@@ -45,10 +45,10 @@ class Symmetric(object):
         iv = Random.new().read(AES.block_size)
         cryptor = AES.new(self.key, self.mode, iv)
         ciphertext = cryptor.encrypt(pad(plaintext))
-        return base64.encodestring(iv + ciphertext)
+        return base64.encodebytes(iv + ciphertext)
 
     def decrypt(self, ciphertext):
-        ciphertext = base64.decodestring(ciphertext)
+        ciphertext = base64.encodebytes(ciphertext)
         iv = ciphertext[0:AES.block_size]
         ciphertext = ciphertext[AES.block_size:len(ciphertext)]
         cryptor = AES.new(self.key, self.mode, iv)

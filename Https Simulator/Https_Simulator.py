@@ -2,17 +2,23 @@ from rsa import generateRSAkey
 from crypto import Asymmetric, Symmetric
 
 def main():
-    '''
-    publicKey,privateKey = generateRSAkey(1024)
+    '''publicKey,privateKey = generateRSAkey(1024)
 
     text = input("String:")
 
-    en = encrypt(publicKey, text)
+    en = Asymmetric(publicKey)
+    enText = en.encrypt(text)
 
-    de = decrypt(privateKey, en)
+    print(len(enText))
+    de = Asymmetric(privateKey)
+    deText = de.decrypt(enText)
 
-    print(de)'''
-  
+    print(deText)'''
+    import base64
+
+    print(base64.b64encode(b"AAAAAA"*256))
+
+
 
 
 if __name__ == "__main__":
