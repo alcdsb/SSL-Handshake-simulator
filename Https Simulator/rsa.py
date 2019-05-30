@@ -55,22 +55,3 @@ def generateRSAkey(keySize=1024):
 
     return publicKey, privateKey
 
-def encrypt(publicKey, RawText):
-
-    RawText = RawText.encode('ascii')
-    RawText = list(RawText)
-    en = []
-    for e in RawText:
-        en.append(pow(e,publicKey[1],publicKey[0]))
-
-    return en
-
-def decrypt(privateKey, EncryptedText):
-
-    de = []
-    for c in EncryptedText:
-        de.append(pow(c, privateKey[1],privateKey[0]))
-        
-    text = bytes(de).decode('ascii')
-    
-    return text

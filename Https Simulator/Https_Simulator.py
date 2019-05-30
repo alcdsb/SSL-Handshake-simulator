@@ -1,6 +1,8 @@
-from rsa import *
+from rsa import generateRSAkey
+from crypto import Asymmetric, Symmetric
 
 def main():
+    '''
     publicKey,privateKey = generateRSAkey(1024)
 
     text = input("String:")
@@ -9,7 +11,8 @@ def main():
 
     de = decrypt(privateKey, en)
 
-    print(de)
+    print(de)'''
+  
 
 
 if __name__ == "__main__":
