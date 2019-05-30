@@ -49,7 +49,7 @@ class Symmetric(object):
         return base64.encodebytes(iv + ciphertext)
 
     def decrypt(self, ciphertext):
-        ciphertext = base64.decodestring(ciphertext)
+        ciphertext = base64.encodebytes(ciphertext)
         iv = ciphertext[0:AES.block_size]
         ciphertext = ciphertext[AES.block_size:len(ciphertext)]
         cryptor = AES.new(self.key, self.mode, iv)
