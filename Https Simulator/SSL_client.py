@@ -15,14 +15,16 @@ def main():
     deText = de.decrypt(enText)
 
     print(deText)'''
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
-    sock.connect(('localhost', 23492))  
-    import time  
-    time.sleep(2)  
-    sock.send(b'1')  
-    print(sock.recv(1024))
-    sock.close()  
+    HOST = 'localhost'
+    PORT = 65432
 
+    ssl_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    ssl_client.connect((HOST, PORT))
+
+    ssl_client.sendall('ClientHello'.encode('utf8'))
+    data = ssl_client.recv(1024)
+    if data!='':
+        print('Received', repr(data))
 
 
 

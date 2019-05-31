@@ -3,23 +3,22 @@ from crypto import Asymmetric, Symmetric
 import socket
 
 def main():
-    SERVER_ADDRESS = 'localhost'
+    HOST = 'localhost'
+    PORT = 65432
 
     ssl_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    ssl_server.bind((SERVER_ADDRESS, 23492))
-    ssl_server.listen(5)
+    ssl_server.bind((HOST, PORT))
+    ssl_server.listen()
+    conn, addr = ssl_server.accept()
+    with conn:
+        print('Connected by', addr)
+        while True:
+            data = conn.recv(1024)
+            print(repr(data))
+            if repr(data) == b'ClientHello':
+                print(1)
+                conn.sendall('Handshake begin')
 
-    while True:
-        connection, address = ssl_server.accept()
-        try:
-            connection.settimeout(50)
-            buf = connection.recv(1024)
-            print(buf)
-            if buf=="1":
-                connection.send("False")
-        except:
-             print("Unable to connect with slient")
-    connection.close()
 if __name__ == "__main__":
 
     main()
