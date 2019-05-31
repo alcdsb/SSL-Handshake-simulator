@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>a26d40ac-e6c1-4313-b7f3-c75dd5539688</ProjectGuid>
+    <ProjectGuid>345c8dc5-6990-4bf0-bf3d-9808d2d90a27</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Https_Simulator.py</StartupFile>
+    <StartupFile>SSL_server.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Https Simulator</Name>
-    <RootNamespace>Https Simulator</RootNamespace>
+    <Name>SSL server</Name>
+    <RootNamespace>SSL server</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,16 +21,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="crypto.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="cryptomath.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Https_Simulator.py" />
-    <Compile Include="rsa.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="crypto.py" />
+    <Compile Include="cryptomath.py" />
+    <Compile Include="format.py" />
+    <Compile Include="rsa.py" />
+    <Compile Include="SSL_server.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
