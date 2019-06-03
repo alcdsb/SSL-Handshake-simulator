@@ -1,7 +1,7 @@
 from Crypto.Cipher import AES
 import base64
 from Crypto import Random
-from format import str64decode, str64encode
+from format import *
 
 class Asymmetric(object):
 
@@ -11,24 +11,16 @@ class Asymmetric(object):
     
     def encrypt(self,text):
 
-        text = str64encode(text)
-        text = list(text) 
-        en = []
-        for e in text:
-            en.append(pow(e,self.key[1],self.key[0]))
+        e = intEncode(text)
+        en = pow(e,self.key[1],self.key[0])
 
-        return en#base64.b64encode(bytes(en))
+        return en
 
-    def decrypt(self,text):
+    def decrypt(self, text):
 
-        de = []
-        text = list(text)
-        for c in text:
-            de.append(pow(c, self.key[1],self.key[0]))
+        de = pow(text, self.key[1],self.key[0])
 
-        text = bytes(de).decode('utf8')
-        text = base64.b64decode(text)
-    
+        text = intDecode(de)
         return text
 
 BS = AES.block_size

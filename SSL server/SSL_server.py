@@ -12,12 +12,13 @@ def main():
     conn, addr = ssl_server.accept()
     with conn:
         print('Connected by', addr)
-        while True:
-            data = conn.recv(1024)
-            print(repr(data))
-            if repr(data) == b'ClientHello':
-                print(1)
-                conn.sendall('Handshake begin')
+        data = conn.recv(1024)
+        if data == b'ClientHello':
+            conn.sendall(b'ServerHello')
+            print('Handshake begin')
+            publicKey, privateKey = generateRSAkey()
+
+
 
 if __name__ == "__main__":
 
