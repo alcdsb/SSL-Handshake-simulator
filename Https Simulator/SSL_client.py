@@ -1,20 +1,27 @@
 from rsa import generateRSAkey
 from crypto import Asymmetric, Symmetric
 import socket
+import timeit
 
 def main():
-    '''
-    publicKey,privateKey = generateRSAkey()
-    text = input("String:")
 
+    '''text = input("String:")
+
+    start = timeit.default_timer()
+    publicKey, privateKey = generateRSAkey()
     en = Asymmetric(publicKey)
     enText = en.encrypt(text)
-    
-    print(enText)
+
     de = Asymmetric(privateKey)
     deText = de.decrypt(enText)
 
-    print(deText)'''
+    stop = timeit.default_timer()
+
+    print('Time: ', stop - start)
+    print(deText)
+'''
+
+
     HOST = 'localhost'
     PORT = 65432
 
@@ -23,8 +30,8 @@ def main():
 
     ssl_client.sendall('ClientHello'.encode('utf8'))
     data = ssl_client.recv(1024)
-    if data!='':
-        print('Received', data)
+    if data == b'ServerHello':
+        print('Received', str(data))
 
 
 

@@ -6,29 +6,18 @@ from format import str64decode, str64encode
 class Asymmetric(object):
 
     def __init__(self, key):
-
         self.key = str64decode(key[0]), str64decode(key[1])
-    
-    def encrypt(self,text):
 
-        text = str64encode(text)
-        text = list(text) 
-        en = []
-        for e in text:
-            en.append(pow(e,self.key[1],self.key[0]))
+    def encrypt(self, text):
+        e = intEncode(text)
+        en = pow(e, self.key[1], self.key[0])
 
-        return en#base64.b64encode(bytes(en))
+        return en
 
-    def decrypt(self,text):
+    def decrypt(self, text):
+        de = pow(text, self.key[1], self.key[0])
 
-        de = []
-        text = list(text)
-        for c in text:
-            de.append(pow(c, self.key[1],self.key[0]))
-
-        text = bytes(de).decode('utf8')
-        text = base64.b64decode(text)
-    
+        text = intDecode(de)
         return text
 
 BS = AES.block_size
