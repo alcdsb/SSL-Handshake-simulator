@@ -24,7 +24,7 @@ def main():
     ssl_client.sendall('ClientHello'.encode('utf8'))
     data = ssl_client.recv(1024)
     if data!='':
-        print('Received', repr(data))
+        print('Received', data)
 
 
 

@@ -1,0 +1,2 @@
+cd /d "C:\Users\dingj\Source\Repos\SSL-Handshake-simulator\SSL server" &msbuild "SSL server.pyproj" /t:sdvViewer /p:configuration="Debug" /p:platform="Any CPU" /p:SolutionDir="C:\Users\dingj\Source\Repos\SSL-Handshake-simulator" 
+exit %errorlevel% 

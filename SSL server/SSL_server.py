@@ -1,7 +1,7 @@
 from rsa import generateRSAkey
 from crypto import Asymmetric, Symmetric
 import socket
-
+from time import sleep
 def main():
     HOST = 'localhost'
     PORT = 65432
@@ -14,10 +14,11 @@ def main():
         print('Connected by', addr)
         while True:
             data = conn.recv(1024)
-            print(repr(data))
-            if repr(data) == b'ClientHello':
-                print(1)
-                conn.sendall('Handshake begin')
+            print(data)
+            if data == b'ClientHello':
+                conn.sendall(b'Handshake begin')
+                handshake()
+                break
 
 if __name__ == "__main__":
 
