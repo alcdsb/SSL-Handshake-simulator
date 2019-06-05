@@ -8,7 +8,7 @@ spc = lambda x,LENGTH:[x[i:i + LENGTH:] for i in range(0, len(x) - LENGTH, LENGT
 class Asymmetric(object):
 
     def __init__(self, key):
-
+        key = key.split(b' ')
         self.key = str64decode(key[0]), str64decode(key[1])
         self.MAX_KEY_LEN = len(str(self.key[0]))//3 - 1
     

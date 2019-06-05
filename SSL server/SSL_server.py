@@ -22,6 +22,18 @@ def main():
             print('Handshake begin')
             publicKey, privateKey = generateRSAkey()
 
+            sign = Asymmetric(PRIVATE_KEY_CA)
+            server_signed = sign.encrypt(data[0] + '/' + publicKey.decode())
+
+            toSend = CA_SIGNED + b'/' + server_signed
+            conn.sendall(toSend)
+            clientPacket = conn.recv(1024)
+            server_unsign = Asymmetric(privateKey)
+
+            clientPacket = server_unsign.decrypt(clientPacket)
+
+            print(clientPacket.split(' ')[1])
+
 
 
 if __name__ == "__main__":
