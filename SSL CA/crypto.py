@@ -18,13 +18,12 @@ class Asymmetric(object):
         en = []
         for elem in text:
             elem = intEncode(elem)
-            en.append(str(pow(elem,self.key[1],self.key[0])))
+            en.append(pow(elem,self.key[1],self.key[0]))
 
-        return ' '.join(en).encode()
+        return en
 
     def decrypt(self, text):
 
-        text = [int(i) for i in text.split().decode()]
         de = ''
         for elem in text:
             de += intDecode(pow(elem, self.key[1],self.key[0]))

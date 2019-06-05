@@ -8,7 +8,7 @@ def rabinMiller(num):
 	while s%2 == 0:
 		s //= 2
 		t += 1
-	for trials in range(5):
+	for trials in range(5): 
 		a = random.randrange(2,num-1)
 		v = pow(a,s,num)
 		if v!=1:
@@ -41,7 +41,7 @@ def generateLargePrime(keysize=2048):
 		if isPrime(num):
 			return num
 
-def generateRSAkey(keySize=1024):
+def generateRSAkey(keySize=1024, e = 65537):
     '''
     p = generateLargePrime(keySize)
     q = generateLargePrime(keySize)
@@ -51,17 +51,15 @@ def generateRSAkey(keySize=1024):
         if cryptomath.gcd(e, (p - 1) * (q - 1)) == 1:
             d = cryptomath.findModInverse(e, (p - 1) * (q - 1))
             break'''
-    e = 65537
-    while True:
+    while True: 
         p = generateLargePrime(keySize)
         q = generateLargePrime(keySize)
         if cryptomath.gcd(e, (p - 1) * (q - 1)) == 1:
             d = cryptomath.findModInverse(e, (p - 1) * (q - 1))
             break
     n = p*q
-    publicKey = str64encode(n) + b' ' + str64encode(e)
-    privateKey = str64encode(n) + b' ' +  str64encode(d)
+    publicKey = (str64encode(n), str64encode(e))
+    privateKey = (str64encode(n), str64encode(d))
 
 
     return publicKey, privateKey
-

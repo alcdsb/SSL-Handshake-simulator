@@ -42,7 +42,7 @@ def generateLargePrime(keysize=2048):
 			return num
 
 def generateRSAkey(keySize=1024):
-
+    '''
     p = generateLargePrime(keySize)
     q = generateLargePrime(keySize)
     n = p*q
@@ -50,9 +50,18 @@ def generateRSAkey(keySize=1024):
         e = random.randrange(2 ** (keySize - 1), 2 ** (keySize))
         if cryptomath.gcd(e, (p - 1) * (q - 1)) == 1:
             d = cryptomath.findModInverse(e, (p - 1) * (q - 1))
+            break'''
+    e = 65537
+    while True:
+        p = generateLargePrime(keySize)
+        q = generateLargePrime(keySize)
+        if cryptomath.gcd(e, (p - 1) * (q - 1)) == 1:
+            d = cryptomath.findModInverse(e, (p - 1) * (q - 1))
             break
-    publicKey = (str64encode(n), str64encode(e))
-    privateKey = (str64encode(n), str64encode(d))
+    n = p*q
+    publicKey = str64encode(n) + b' ' + str64encode(e)
+    privateKey = str64encode(n) + b' ' +  str64encode(d)
+
 
     return publicKey, privateKey
 

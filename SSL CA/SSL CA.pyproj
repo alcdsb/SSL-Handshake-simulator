@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>345c8dc5-6990-4bf0-bf3d-9808d2d90a27</ProjectGuid>
+    <ProjectGuid>937a41bd-dfa8-4975-b715-3c87fd0969ea</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>SSL_server.py</StartupFile>
+    <StartupFile>SSL_CA.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>SSL server</Name>
-    <RootNamespace>SSL server</RootNamespace>
+    <Name>SSL CA</Name>
+    <RootNamespace>SSL CA</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,11 +24,8 @@
     <Compile Include="crypto.py" />
     <Compile Include="cryptomath.py" />
     <Compile Include="format.py" />
-    <Compile Include="key.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="rsa.py" />
-    <Compile Include="SSL_server.py" />
+    <Compile Include="SSL_CA.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
