@@ -24,11 +24,11 @@ class Asymmetric(object):
 
     def decrypt(self, text):
 
-        text = [int(i) for i in text.split().decode()]
+        text = [int(i) for i in text.decode().split()]
         de = ''
         for elem in text: 
             de += intDecode(pow(elem, self.key[1],self.key[0]))
-
+        
         return de.encode()
 
 BS = AES.block_size

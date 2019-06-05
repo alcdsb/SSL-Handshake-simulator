@@ -16,7 +16,7 @@ def main():
     with conn:
         print('Connected by', addr)
         data = conn.recv(1024).decode().split('/')
-        print(data)
+
         if data[1] == 'ClientHello':
             conn.sendall(b'ServerHello')
             print('Handshake begin')
@@ -26,15 +26,15 @@ def main():
             server_signed = sign.encrypt(data[0] + '/' + publicKey.decode())
 
             toSend = CA_SIGNED + b'/' + server_signed
+
             conn.sendall(toSend)
             clientPacket = conn.recv(1024)
             server_unsign = Asymmetric(privateKey)
-
             clientPacket = server_unsign.decrypt(clientPacket)
-
-            print(clientPacket.split(' ')[1])
-
-
+            commKey, clientInt = clientPacket.split(b' ')
+            print(len(commKey.decode()))
+            commu = Symmetric(commKey)
+            conn.sendall(commu.encrypt(clientInt.decode()))
 
 if __name__ == "__main__":
 

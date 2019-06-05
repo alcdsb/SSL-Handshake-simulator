@@ -2,7 +2,6 @@ from rsa import generateRSAkey
 from crypto import Asymmetric, Symmetric
 import socket
 from random import randint
-from hashlib import sha256
 
 
 def main():
@@ -48,27 +47,32 @@ def main():
     serverHello = ssl_client.recv(1024)
     if serverHello == b'ServerHello':
         print('Hankshake begins')
-        signed_packet = ssl_client.recv(1024)
+        signed_packet = ssl_client.recv(2**14)
         signed_packet = signed_packet.split(b'/')
         caDeSign = Asymmetric(CA_ROOT_KEY)
-        serverPublicKey_CA = caDeSign.decrypt(signed_packet[0]).encode()
 
+        serverPublicKey_CA = caDeSign.decrypt(signed_packet[0]).encode()
         serverDeSign = Asymmetric(serverPublicKey_CA)
         serverSign = serverDeSign.decrypt(signed_packet[1])
-        serverSign = serverSign.split('/')
+        serverSign = serverSign.encode().split(b'/')
 
-        if serverSign[0] == CLIENT_INT.decode():
+
+        if serverSign[0] == CLIENT_INT:
 
             serverPublicKey = serverSign[1]
 
             dec = Asymmetric(serverPublicKey)
 
-            clientAesKey = sha256(str(randint(2**16, 2**17)).encode()).hexdigest()
-
+            clientAesKey = '7djnekj2lkdwijf8'#sha64(str(randint(2**16, 2**17)).encode()).hexdigest()
+            print(clientAesKey)
             CLIENT_INT = str(randint(2**32, 2**33))
             signed_packet = dec.encrypt(clientAesKey+' '+CLIENT_INT)
 
-            ssl_client.sendall(signed_packet.encode())
+            ssl_client.sendall(signed_packet)
+
+            commu = Symmetric(clientAesKey.encode())
+            if commu.decrypt(ssl_client.recv(1024).decode()) == CLIENT_INT:
+                print(True)
 
         else:
             ssl_client.sendall(b'Refuse Connection')
