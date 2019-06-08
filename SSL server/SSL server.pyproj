@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="chat.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="crypto.py" />
     <Compile Include="cryptomath.py" />
     <Compile Include="format.py" />

@@ -59,3 +59,6 @@ class Symmetric(object):
         plaintext = cryptor.decrypt(ciphertext[AES.block_size:])
 
         return unpad(plaintext).decode()
+
+    def __str__(self):
+        return self.key.decode()
