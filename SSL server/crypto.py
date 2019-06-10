@@ -60,5 +60,5 @@ class Symmetric(object):
 
         return unpad(plaintext).decode()
 
-    def __str__(self):
+    def getKey(self):
         return self.key.decode()

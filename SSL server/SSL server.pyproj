@@ -32,6 +32,15 @@
     </Compile>
     <Compile Include="rsa.py" />
     <Compile Include="SSL_server.py" />
+    <Compile Include="userLogin.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ChatHistory.txt">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="loginDict.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

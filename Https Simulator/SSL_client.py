@@ -63,7 +63,6 @@ def main():
 
             myword = input()
             ssl_client.send(crypt.encrypt(myword))
-            #print(sock.recv(1024).decode())
     
     def recvThreadFunc():
         while True:
@@ -72,13 +71,23 @@ def main():
                 print(crypt.decrypt(otherword))
     
     status, crypt = handShake(ssl_client)
+
     if status:
         print(crypt.decrypt(ssl_client.recv(1024)))
         while True:
             nickName = input('Input your nickname: ')
+            #passw = input('Input your password: ')
             ssl_client.send(crypt.encrypt(nickName))
-            if crypt.decrypt(ssl_client.recv(1024)) != 'Nickname already in used':
+            #ssl_client.send(crypt.encrypt(nickName + ' ' + passw))
+            loginStatus = crypt.decrypt(ssl_client.recv(1024))
+            #if loginStatusnot == 'NF False':
+                #print('Nickname already be used')
+            #elif loginStatus == 'WPU False':
+                #print('Nickname or password is wrong')
+            #else: break
+            if loginStatus != 'False':
                 break
+            print('Nickname used')
 
         th1 = threading.Thread(target=sendThreadFunc)
         th2 = threading.Thread(target=recvThreadFunc)

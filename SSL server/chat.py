@@ -11,12 +11,13 @@ class SslClient(threading.Thread):
 
     clientDict = []
     clientList = []
+    chatHistory = open('chatHistory.txt', 'r').read()
+    loginDict = dict([info.split() for info in open('loginDict.txt','r').read().split('\n')])
 
     def __init__(self, conn):
 
         threading.Thread.__init__(self)
         status, self.symmetric = self.__handShake(conn)
-        print(self.symmetric)
         self.connection = conn
 
     def __handShake(self, conn):
@@ -55,28 +56,63 @@ class SslClient(threading.Thread):
         for conn in SslClient.clientList:
             if conn.connection.fileno() != self.connection.fileno():
                 conn.send(message)
+    
+    def login(self, passw, username):
+        if username in SslClient.loginDict:
+            if SslClient.loginDict[username]== passw:
+                return True
+        return False
 
     def run(self):
 
         self.send('Welcome to the server')
-        
+        '''
+        while True:
+            name = self.recv()
+            name = str(name)
+            print(name)
+            self.nickName = name.split()[0]
+            passw = name.split()[1]
+            print(1)
+            if self.login(self.nickName, passw):
+
+                if self.nickName not in SslClient.clientDict:
+                    print(6)
+                    SslClient.clientDict.append(self.nickName)
+                    self.send('Nickname :'+ self.nickName)
+                    print(7)
+                    break
+
+                self.send('555553n6353yn')
+            else:
+                print(8)
+                self.send('53yn5ny355n5yn')
+                print(9)'''
+
         while True:
             self.nickName = self.recv()
             if self.nickName not in SslClient.clientDict:
                 SslClient.clientDict.append(self.nickName)
                 self.send('Nickname :'+ self.nickName)
                 break
-            print(1)
-            self.send('Nickname already in used')
+
+            self.send('False')
 
         SslClient.clientList.append(self)
         self.sendEveryone('System notice: ' + self.nickName + ' enter the chat room')
+        self.send(SslClient.chatHistory)
+
         while True:
             try:
                 recvedMsg = self.recv()
-                if recvedMsg :
-                    print(self.nickName, ':', recvedMsg)
-                    self.sendEveryone(self.nickName + ' : ' + recvedMsg)
+                if recvedMsg == 'getKey':
+                    self.send(self.symmetric.getKey())
+                elif recvedMsg :
+                    message = self.nickName + ' : ' + recvedMsg
+                    print(message)
+                    self.sendEveryone(message)
+                    SslClient.chatHistory += message + '\n'
+                          
 
             except (OSError, ConnectionResetError):
                 
@@ -86,6 +122,10 @@ class SslClient(threading.Thread):
 
                 print(self.nickName, 'exit, ', len(SslClient.clientList), ' person left')
                 self.sendEveryone('System notice: ' + self.nickName + ' left the chat room. ' + str(len(SslClient.clientList)) + ' person left')
+                if len(SslClient.clientList) == 0:
+                    open('chatHistory.txt','w').write(SslClient.chatHistory)
+
                 self.connection.close()
+
                 return None
       
