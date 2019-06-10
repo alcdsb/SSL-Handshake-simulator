@@ -57,7 +57,7 @@ class SslClient(threading.Thread):
             if conn.connection.fileno() != self.connection.fileno():
                 conn.send(message)
     
-    def login(self, passw, username):
+    def Userlogin(self, username, passw):
         if username in SslClient.loginDict:
             if SslClient.loginDict[username]== passw:
                 return True
@@ -66,15 +66,10 @@ class SslClient(threading.Thread):
     def run(self):
 
         self.send('Welcome to the server')
-        '''
+
         while True:
-            name = self.recv()
-            name = str(name)
-            print(name)
-            self.nickName = name.split()[0]
-            passw = name.split()[1]
-            print(1)
-            if self.login(self.nickName, passw):
+            self.nickName, passw = self.recv().split()
+            if self.Userlogin(self.nickName, passw):
 
                 if self.nickName not in SslClient.clientDict:
                     print(6)
@@ -83,12 +78,12 @@ class SslClient(threading.Thread):
                     print(7)
                     break
 
-                self.send('555553n6353yn')
+                self.send('NF False')
             else:
                 print(8)
-                self.send('53yn5ny355n5yn')
-                print(9)'''
-
+                self.send('WPU False')
+                print(9)
+        '''
         while True:
             self.nickName = self.recv()
             if self.nickName not in SslClient.clientDict:
@@ -97,6 +92,7 @@ class SslClient(threading.Thread):
                 break
 
             self.send('False')
+        '''
 
         SslClient.clientList.append(self)
         self.sendEveryone('System notice: ' + self.nickName + ' enter the chat room')
