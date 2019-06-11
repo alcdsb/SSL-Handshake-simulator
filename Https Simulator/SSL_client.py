@@ -77,17 +77,13 @@ def main():
         while True:
             nickName = input('Input your nickname: ')
             passw = input('Input your password: ')
-            #ssl_client.send(crypt.encrypt(nickName))
             ssl_client.send(crypt.encrypt(nickName + ' ' + passw))
             loginStatus = crypt.decrypt(ssl_client.recv(1024))
-            if loginStatusnot == 'NF False':
+            if loginStatus == 'NF False':
                 print('Nickname already be used')
             elif loginStatus == 'WPU False':
                 print('Nickname or password is wrong')
             else: break
-            #if loginStatus != 'False':
-                #break
-            #print('Nickname used')
 
         th1 = threading.Thread(target=sendThreadFunc)
         th2 = threading.Thread(target=recvThreadFunc)

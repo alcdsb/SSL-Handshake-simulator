@@ -57,32 +57,32 @@ class SslClient(threading.Thread):
             if conn.connection.fileno() != self.connection.fileno():
                 conn.send(message)
     
-    def Userlogin(self, username, passw):
+    def userlogin(self, username, passw):
         if username in SslClient.loginDict:
             if SslClient.loginDict[username]== passw:
                 return True
         return False
 
-    def run(self):
+    def userSignUp(self, username, passw):
+        if username not in SslClient.loginDict:
+            SslClient.loginDict[username] = passw
+            return True
+        return False
 
+    def run(self):
         self.send('Welcome to the server')
 
         while True:
             self.nickName, passw = self.recv().split()
-            if self.Userlogin(self.nickName, passw):
+            if self.userlogin(self.nickName, passw):
 
                 if self.nickName not in SslClient.clientDict:
-                    print(6)
                     SslClient.clientDict.append(self.nickName)
-                    self.send('Nickname :'+ self.nickName)
-                    print(7)
+                    self.send('Welcome!'+'\n'+'Nickname :'+ self.nickName)
                     break
-
                 self.send('NF False')
             else:
-                print(8)
                 self.send('WPU False')
-                print(9)
         '''
         while True:
             self.nickName = self.recv()
@@ -103,6 +103,11 @@ class SslClient(threading.Thread):
                 recvedMsg = self.recv()
                 if recvedMsg == 'getKey':
                     self.send(self.symmetric.getKey())
+                elif recvedMsg == 'signUp':
+                    if self.userSignUp(*self.recv().split()):
+                        self.send('S')
+                    else:
+                        self.send('US')
                 elif recvedMsg :
                     message = self.nickName + ' : ' + recvedMsg
                     print(message)
@@ -120,6 +125,7 @@ class SslClient(threading.Thread):
                 self.sendEveryone('System notice: ' + self.nickName + ' left the chat room. ' + str(len(SslClient.clientList)) + ' person left')
                 if len(SslClient.clientList) == 0:
                     open('chatHistory.txt','w').write(SslClient.chatHistory)
+                    open('loginDict.txt', 'w').write('\n'.join([username +' '+SslClient.loginDict[username] for username in SslClient.loginDict]))
 
                 self.connection.close()
 
