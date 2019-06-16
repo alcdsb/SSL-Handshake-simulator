@@ -71,28 +71,19 @@ class SslClient(threading.Thread):
 
     def run(self):
         self.send('Welcome to the server')
+        try:
+            while True:
+                self.nickName, passw = self.recv().split()
+                if self.userlogin(self.nickName, passw):
 
-        while True:
-            self.nickName, passw = self.recv().split()
-            if self.userlogin(self.nickName, passw):
-
-                if self.nickName not in SslClient.clientDict:
-                    SslClient.clientDict.append(self.nickName)
-                    self.send('Welcome!'+'\n'+'Nickname :'+ self.nickName)
-                    break
-                self.send('NF False')
-            else:
-                self.send('WPU False')
-        '''
-        while True:
-            self.nickName = self.recv()
-            if self.nickName not in SslClient.clientDict:
-                SslClient.clientDict.append(self.nickName)
-                self.send('Nickname :'+ self.nickName)
-                break
-
-            self.send('False')
-        '''
+                    if self.nickName not in SslClient.clientDict:
+                        SslClient.clientDict.append(self.nickName)
+                        self.send('Welcome!'+'\n'+'Nickname :'+ self.nickName)
+                        break
+                    self.send('NF False')
+                else:
+                    self.send('WPU False')
+        except:self.connection.close()
 
         SslClient.clientList.append(self)
         self.sendEveryone('System notice: ' + self.nickName + ' enter the chat room')
@@ -117,7 +108,9 @@ class SslClient(threading.Thread):
 
             except (OSError, ConnectionResetError):
                 
-                try: SslClient.clientList.remove(self)
+                try: 
+                    SslClient.clientList.remove(self)
+                    SslClient.clientDict.remove(self.nickName)
 
                 except:pass
 

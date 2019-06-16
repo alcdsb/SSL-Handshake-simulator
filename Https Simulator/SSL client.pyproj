@@ -31,6 +31,9 @@
     <Compile Include="format.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUI.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SSL_client.py" />
     <Compile Include="rsa.py">
       <SubType>Code</SubType>

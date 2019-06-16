@@ -32,9 +32,6 @@
     </Compile>
     <Compile Include="rsa.py" />
     <Compile Include="SSL_server.py" />
-    <Compile Include="userLogin.py">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ChatHistory.txt">

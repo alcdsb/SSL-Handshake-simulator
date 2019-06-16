@@ -1,8 +1,8 @@
 from chat import SslClient, socket
 
 def main():
-    HOST = 'localhost'
-    PORT = 61563
+    HOST = 'localhost' #server ip
+    PORT = 61563 # server port
     
 
     ssl_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

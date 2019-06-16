@@ -64,4 +64,3 @@ def generateRSAkey(keySize=1024):
 
 
     return publicKey, privateKey
-
