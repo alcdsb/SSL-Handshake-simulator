@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SSL client", "Https Simulator\SSL client.pyproj", "{A26D40AC-E6C1-4313-B7F3-C75DD5539688}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SSL client", "SSL client\SSL client.pyproj", "{A26D40AC-E6C1-4313-B7F3-C75DD5539688}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SSL server", "SSL server\SSL server.pyproj", "{345C8DC5-6990-4BF0-BF3D-9808D2D90A27}"
 EndProject
