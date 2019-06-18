@@ -1,3 +1,5 @@
+'''See documentation from SSL server, the crypto,  cryptomath, format, and rsa library used in client and server are the same'''
+
 def gcd(a, b):
     # Return the GCD of a and b using Euclid's Algorithm
     while a != 0:

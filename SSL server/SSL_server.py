@@ -1,8 +1,8 @@
 from chat import SslClient, socket
 
 def main():
-    HOST = 'localhost' #server ip
-    PORT = 61563 # server port
+    HOST = '' #'localhost'
+    PORT = 61563 # server port for chat room
     
 
     ssl_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -13,6 +13,7 @@ def main():
 
         conn, addr = ssl_server.accept()
         print('Accept a new connection', conn.getsockname(), conn.fileno())
+        #Every times a Sslclient instance is created, a thread is created
         newThread = SslClient(conn)
         newThread.setDaemon(True)
         newThread.start()

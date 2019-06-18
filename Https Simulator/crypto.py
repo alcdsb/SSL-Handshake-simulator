@@ -1,3 +1,4 @@
+'''See documentation from SSL server, the crypto,  cryptomath, format, and rsa library used in client and server are the same'''
 from Crypto.Cipher import AES
 import base64
 from Crypto import Random

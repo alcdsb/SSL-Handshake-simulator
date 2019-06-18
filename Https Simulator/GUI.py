@@ -1,5 +1,7 @@
 '''
-Leo
+Negligible parts are modified by Jingyu inorder to connect to the client interface, and create multi-threads
+
+By Leo
 '''
 from tkinter import *
 from tkinter.messagebox import *
@@ -31,15 +33,16 @@ def RegistationPage(login):
         Button(root,text = "register",command = registerCheck).grid(row =4,stick = W,pady =10)
 
 def chatRoom(ssl_client,crypt):
-    ssl_client =ssl_client
-    crypt =crypt
+    ssl_client =ssl_client 
+    crypt =crypt 
     def msgsend():
             msg = txt_msgsend.get('0.0', END)
             txt_msglist.insert(END, '\nMe : ' +msg)
-            ssl_client.send(crypt.encrypt(msg))
+            ssl_client.send(crypt.encrypt(msg)) #Jingyu
             txt_msgsend.delete('0.0',END)
 
     def msgrecv():
+        '''A Thread for recieving message'''
         while True:
             otherword = ssl_client.recv(1024)
             if otherword:
